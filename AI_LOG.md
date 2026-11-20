@@ -18,7 +18,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 1 | Pasted the full assignment brief. | Plan for the app, broken into steps. |
 | 2 | "It's going to be a React Native Expo app. Don't access my system outside this folder." | Expo SDK 58 + TypeScript project; AI restricted to the project folder. |
 | 3 | "Don't build the whole thing in one go. First split the woke into parts and suggest me the plan, then we will move step by step." | Work split into small, reviewable steps, each committed separately. |
-| 4 | "The code is over-complicated, even the theme has lots of calculations." | Simplification pass, listed in the next table. |
+| 4 | "Create an index file in the components folder and export all components from there." | `src/components/index.ts`; screens import from `@/components`. |
+| 5 | "The code is over-complicated, even the theme has lots of calculations." | Simplification pass, listed in the next table. |
 
 ---
 
@@ -29,11 +30,13 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | A plan to build the whole app in one pass | No reviewable history; hard to understand | One feature per step, committed separately |
 | Reading a file outside the project folder while fixing an install error | Outside the agreed scope | AI limited to the project folder |
 | `baseUrl` in `tsconfig.json` | Deprecated in TypeScript 6 | Only `paths` is used |
+| Long comment blocks on every function, "STEP N PLACEHOLDER" banners | Noisy; restated the code | Short comments only where the reason isn't obvious |
 | Theme colour maths (brightness, contrast ratios, colour mixing) | Hard to explain; not required by the brief | Config colours used as sent, plus one `withOpacity()` helper |
 | Dark palette calculated from the light one | Same reason | Dark colours come from the config, or a fixed default |
 | Slot availability from a hash function and timezone arithmetic | Over-engineered for mock data | Plain list of clinic times; every 4th slot is booked |
 | Mock server built with dependency injection | Extra indirection for no benefit | One plain function per endpoint |
 | `useSyncExternalStore` to load saved data | Hard to explain | `loadSavedData()` and a `ready` flag in the root layout |
+| Spring animation on every button press | Animation where the brief doesn't ask for it | `Pressable` with a pressed opacity |
 | Validation with warning lists, contrast checks and a custom error class | More than the app uses | Validation returns `{ ok, config }` or `{ ok, error }` |
 | A `lib/` folder for small helpers | Unclear name | `utils/` |
 
