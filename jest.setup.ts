@@ -1,2 +1,4 @@
-// Global test setup. Native-module mocks get added here as features land.
-export {};
+// Global test setup: in-memory replacements for native modules.
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);

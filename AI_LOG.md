@@ -31,6 +31,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | `baseUrl` in `tsconfig.json` | Deprecated in TypeScript 6 | Only `paths` is used |
 | Theme colour maths (brightness, contrast ratios, colour mixing) | Hard to explain; not required by the brief | Config colours used as sent, plus one `withOpacity()` helper |
 | Dark palette calculated from the light one | Same reason | Dark colours come from the config, or a fixed default |
+| Slot availability from a hash function and timezone arithmetic | Over-engineered for mock data | Plain list of clinic times; every 4th slot is booked |
+| Mock server built with dependency injection | Extra indirection for no benefit | One plain function per endpoint |
 | Validation with warning lists, contrast checks and a custom error class | More than the app uses | Validation returns `{ ok, config }` or `{ ok, error }` |
 | A `lib/` folder for small helpers | Unclear name | `utils/` |
 
@@ -41,8 +43,17 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Decision | Reason |
 |---|---|
 | Expo + Expo Router | APK builds without Android Studio (EAS); file-based routes and deep links built in |
+| Mock backend inside the app (not json-server or MSW) | The APK works on its own, so slow network, failures and the Diwali theme can be tested without a computer |
 | Hand-written config validation (no zod) | Short, no extra dependency, easy to walk through |
 | Hard-coded colours only in `src/theme/colors.ts` | Everything else comes from the config, as the brief requires |
+
+---
+
+## Problems found during review
+
+| Problem | Fix |
+|---|---|
+| React Native's `URL` doesn't fully support `searchParams` | Query string parsed with a small helper in the mock server |
 
 ---
 

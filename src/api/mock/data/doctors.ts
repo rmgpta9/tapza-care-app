@@ -1,0 +1,88 @@
+import type { Doctor } from '@/api/types';
+
+const SUNRISE = 'Tapza Sunrise Clinic, Banjara Hills, Hyderabad';
+const BENZ = 'Tapza Clinic, Benz Circle, Vijayawada';
+
+// placeholder portraits; UI shows initials if a photo fails
+export const DOCTORS: Omit<Doctor, 'nextAvailableAt'>[] = [
+  {
+    id: 'd1',
+    name: 'Dr. Lakshmi Narayana Rao',
+    specialty: 'General Physician',
+    photoUrl: 'https://randomuser.me/api/portraits/men/75.jpg',
+    feeInr: 500,
+    languages: ['Telugu', 'English', 'Hindi'],
+    clinicName: SUNRISE,
+    experienceYears: 22,
+  },
+  {
+    id: 'd2',
+    name: 'Dr. Ananya Reddy',
+    specialty: 'Paediatrician',
+    photoUrl: 'https://randomuser.me/api/portraits/women/44.jpg',
+    feeInr: 600,
+    languages: ['Telugu', 'English'],
+    clinicName: SUNRISE,
+    experienceYears: 11,
+  },
+  {
+    id: 'd3',
+    name: 'Dr. Mohammed Irfan',
+    specialty: 'Cardiologist',
+    photoUrl: 'https://randomuser.me/api/portraits/men/52.jpg',
+    feeInr: 900,
+    languages: ['Urdu', 'Hindi', 'English', 'Telugu'],
+    clinicName: SUNRISE,
+    experienceYears: 17,
+  },
+  {
+    id: 'd4',
+    name: 'Dr. Sravani Kota',
+    specialty: 'Gynaecologist',
+    photoUrl: 'https://randomuser.me/api/portraits/women/65.jpg',
+    feeInr: 700,
+    languages: ['Telugu', 'English'],
+    clinicName: BENZ,
+    experienceYears: 14,
+  },
+  {
+    id: 'd5',
+    name: 'Dr. Venkatesh Iyer',
+    specialty: 'Orthopaedic Surgeon',
+    photoUrl: 'https://randomuser.me/api/portraits/men/41.jpg',
+    feeInr: 800,
+    languages: ['Tamil', 'English', 'Telugu'],
+    clinicName: BENZ,
+    experienceYears: 19,
+  },
+  {
+    id: 'd6',
+    name: 'Dr. Priya Sharma',
+    specialty: 'Dermatologist',
+    photoUrl: 'https://randomuser.me/api/portraits/women/68.jpg',
+    feeInr: 650,
+    languages: ['Hindi', 'English'],
+    clinicName: SUNRISE,
+    experienceYears: 9,
+  },
+  {
+    id: 'd7',
+    name: 'Dr. K. Suresh Babu',
+    specialty: 'Pathologist · Tapza Diagnostics',
+    photoUrl: 'https://randomuser.me/api/portraits/men/33.jpg',
+    feeInr: 0,
+    languages: ['Telugu', 'English'],
+    clinicName: SUNRISE,
+    experienceYears: 24,
+  },
+  {
+    id: 'd8',
+    name: 'Dr. Fatima Begum',
+    specialty: 'Diabetologist',
+    photoUrl: 'https://randomuser.me/api/portraits/women/50.jpg',
+    feeInr: 700,
+    languages: ['Urdu', 'Hindi', 'Telugu', 'English'],
+    clinicName: BENZ,
+    experienceYears: 15,
+  },
+];
