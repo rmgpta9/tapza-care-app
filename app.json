@@ -1,25 +1,30 @@
 {
   "expo": {
-    "name": "tapza-care",
+    "name": "Tapza Care",
     "slug": "tapza-care",
+    "scheme": "tapzacare",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "ios": {
-      "supportsTablet": true
-    },
+    "userInterfaceStyle": "automatic",
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.tapza.care" },
     "android": {
+      "package": "com.tapza.care",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#E6F4F1",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "web": { "favicon": "./assets/favicon.png", "bundler": "metro" },
+    "plugins": [
+      "expo-router",
+      "expo-image",
+      "expo-localization",
+      ["expo-notifications", { "color": "#0F766E" }]
+    ],
+    "experiments": { "typedRoutes": false }
   }
 }
