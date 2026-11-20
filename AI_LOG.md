@@ -59,6 +59,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 
 | Problem | Fix |
 |---|---|
+| Expo Router's custom tab bar API changed in SDK 58 (no `navigation` prop) | Rewritten to use `navigateToTab`, matching the library's own tab bar |
 | React Native's `URL` doesn't fully support `searchParams` | Query string parsed with a small helper in the mock server |
 
 ---
