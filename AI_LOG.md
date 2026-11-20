@@ -33,6 +33,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Dark palette calculated from the light one | Same reason | Dark colours come from the config, or a fixed default |
 | Slot availability from a hash function and timezone arithmetic | Over-engineered for mock data | Plain list of clinic times; every 4th slot is booked |
 | Mock server built with dependency injection | Extra indirection for no benefit | One plain function per endpoint |
+| `useSyncExternalStore` to load saved data | Hard to explain | `loadSavedData()` and a `ready` flag in the root layout |
 | Validation with warning lists, contrast checks and a custom error class | More than the app uses | Validation returns `{ ok, config }` or `{ ok, error }` |
 | A `lib/` folder for small helpers | Unclear name | `utils/` |
 
@@ -44,6 +45,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 |---|---|
 | Expo + Expo Router | APK builds without Android Studio (EAS); file-based routes and deep links built in |
 | Mock backend inside the app (not json-server or MSW) | The APK works on its own, so slow network, failures and the Diwali theme can be tested without a computer |
+| TanStack Query for server data | Loading, error, retry and caching are handled the same way on every screen |
+| Zustand for saved app state (no Redux) | Small stores, saved to the phone in one line |
 | Hand-written config validation (no zod) | Short, no extra dependency, easy to walk through |
 | Hard-coded colours only in `src/theme/colors.ts` | Everything else comes from the config, as the brief requires |
 
