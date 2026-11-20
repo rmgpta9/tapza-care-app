@@ -1,23 +1,6 @@
-/**
- * The remote layout contract. Shapes mirror the assignment spec; optional
- * fields are additive so a "spec-only" config still validates.
- */
+// The shape of GET /config, as given in the assignment.
 
 export type ScreenId = 'home' | 'bookings' | 'prescriptions' | 'profile';
-export const SCREEN_IDS: readonly ScreenId[] = ['home', 'bookings', 'prescriptions', 'profile'];
-
-export type BackgroundKind = 'color' | 'gradient' | 'image';
-export const BACKGROUND_KINDS: readonly BackgroundKind[] = ['color', 'gradient', 'image'];
-
-export interface SectionBackground {
-  kind: BackgroundKind;
-  /**
-   * color:    "#RRGGBB"
-   * gradient: "#RRGGBB,#RRGGBB[,...]" (top → bottom), optional leading angle "135deg,"
-   * image:    https URL
-   */
-  value: string;
-}
 
 export interface ThemePalette {
   primary: string;
@@ -29,16 +12,6 @@ export interface ThemePalette {
   accent: string;
 }
 
-export const PALETTE_KEYS: readonly (keyof ThemePalette)[] = [
-  'primary',
-  'secondary',
-  'background',
-  'surface',
-  'textPrimary',
-  'textSecondary',
-  'accent',
-];
-
 export interface FestivalInfo {
   name: string;
   greeting: string;
@@ -46,18 +19,21 @@ export interface FestivalInfo {
 }
 
 export interface ThemeConfig extends ThemePalette {
-  /** Present only on festival days. */
-  festival?: FestivalInfo;
-  /** Optional dark palette. Missing keys are derived from the light palette. */
-  dark?: Partial<ThemePalette>;
+  festival?: FestivalInfo; // only on festival days
+  dark?: ThemePalette; // optional dark-mode colours
 }
 
 export interface TabConfig {
   id: string;
   label: string;
-  /** Ionicons glyph name. Unknown names fall back to a neutral glyph. */
-  icon: string;
+  icon: string; // an Ionicons name, e.g. "home-outline"
   screen: ScreenId;
+}
+
+export interface SectionBackground {
+  kind: 'color' | 'gradient' | 'image';
+  // color: "#FFFFFF", gradient: "#FFFFFF,#EEEEEE", image: "https://..."
+  value: string;
 }
 
 export interface SectionConfig {
@@ -65,10 +41,8 @@ export interface SectionConfig {
   type: string;
   background: SectionBackground;
   title: string;
-  /** Validated per section type by the renderer registry. */
-  items: unknown[];
-  /** Optional layout hint for grid sections. */
-  columns?: 2 | 3;
+  items: unknown[]; // each section type checks its own items
+  columns?: number; // for service_grid
 }
 
 export interface LayoutConfig {

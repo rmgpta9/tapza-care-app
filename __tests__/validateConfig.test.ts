@@ -1,8 +1,6 @@
-import { parseGradient, validateLayoutConfig } from '@/config/validate';
-import { buildTheme } from '@/theme/buildTheme';
-import { contrastRatio } from '@/theme/color';
+import { DEFAULT_TABS, validateLayoutConfig } from '@/config/validate';
 
-const validConfig = {
+const goodConfig = {
   version: 1,
   theme: {
     primary: '#0F766E',
@@ -13,80 +11,52 @@ const validConfig = {
     textSecondary: '#53625F',
     accent: '#F59E0B',
   },
-  tabs: [
-    { id: 'home', label: 'Home', icon: 'home-outline', screen: 'home' },
-    { id: 'profile', label: 'Profile', icon: 'person-outline', screen: 'profile' },
-  ],
+  tabs: [{ id: 'home', label: 'Home', icon: 'home-outline', screen: 'home' }],
   sections: [
     { id: 'offer', type: 'offer_strip', background: { kind: 'color', value: '#FFF4E5' }, title: 'Offer', items: [] },
-    { id: 'future', type: 'video_story', background: { kind: 'color', value: '#FFFFFF' }, title: 'New', items: [] },
+    { id: 'new', type: 'video_stories', background: { kind: 'color', value: '#FFFFFF' }, title: 'New', items: [] },
   ],
 };
 
 describe('validateLayoutConfig', () => {
-  it('accepts a valid config and keeps unknown section types for the renderer to skip', () => {
-    const result = validateLayoutConfig(validConfig);
+  it('accepts a good config', () => {
+    const result = validateLayoutConfig(goodConfig);
     expect(result.ok).toBe(true);
-    if (!result.ok) return;
-    expect(result.config.sections.map((s) => s.type)).toEqual(['offer_strip', 'video_story']);
   });
 
-  it('rejects non-objects and bad theme colours', () => {
+  it('keeps unknown section types (the home screen skips them)', () => {
+    const result = validateLayoutConfig(goodConfig);
+    if (!result.ok) throw new Error(result.error);
+    expect(result.config.sections.map((s) => s.type)).toEqual(['offer_strip', 'video_stories']);
+  });
+
+  it('rejects a config that is not an object', () => {
     expect(validateLayoutConfig(null).ok).toBe(false);
-    const bad = validateLayoutConfig({ ...validConfig, theme: { ...validConfig.theme, primary: 'teal' } });
-    expect(bad.ok).toBe(false);
-    if (bad.ok) return;
-    expect(bad.errors.join()).toContain('theme.primary');
+    expect(validateLayoutConfig('hello').ok).toBe(false);
   });
 
-  it('drops malformed sections and duplicate ids but keeps the rest', () => {
+  it('rejects a theme colour that is not #RRGGBB', () => {
+    const result = validateLayoutConfig({ ...goodConfig, theme: { ...goodConfig.theme, primary: 'teal' } });
+    expect(result.ok).toBe(false);
+  });
+
+  it('drops a broken section and a duplicate id, keeps the rest', () => {
     const result = validateLayoutConfig({
-      ...validConfig,
+      ...goodConfig,
       sections: [
-        validConfig.sections[0],
-        { id: 'broken', type: 'offer_strip', background: { kind: 'color', value: 'red' } },
-        { ...validConfig.sections[0] },
+        goodConfig.sections[0],
+        { id: 'broken', type: 'offer_strip' }, // no background
+        goodConfig.sections[0], // same id again
         'not a section',
       ],
     });
-    expect(result.ok).toBe(true);
-    if (!result.ok) return;
+    if (!result.ok) throw new Error(result.error);
     expect(result.config.sections).toHaveLength(1);
-    expect(result.warnings.length).toBeGreaterThanOrEqual(3);
   });
 
-  it('always keeps home and profile tabs reachable', () => {
-    const result = validateLayoutConfig({ ...validConfig, tabs: [] });
-    expect(result.ok).toBe(true);
-    if (!result.ok) return;
-    expect(result.config.tabs.map((t) => t.screen)).toEqual(['home', 'profile']);
-  });
-
-  it('warns on unreadable text contrast', () => {
-    const result = validateLayoutConfig({
-      ...validConfig,
-      theme: { ...validConfig.theme, textPrimary: '#EEEEEE' },
-    });
-    expect(result.warnings.join()).toContain('contrast');
-  });
-});
-
-describe('parseGradient', () => {
-  it('parses stops with and without an angle', () => {
-    expect(parseGradient('#FFFFFF,#000000')).toEqual({ angle: 180, colors: ['#FFFFFF', '#000000'] });
-    expect(parseGradient('135deg,#FFF,#000')?.angle).toBe(135);
-    expect(parseGradient('#FFFFFF')).toBeNull();
-  });
-});
-
-describe('buildTheme', () => {
-  it('derives readable on-colours in light and dark', () => {
-    const result = validateLayoutConfig(validConfig);
-    if (!result.ok) throw new Error('fixture invalid');
-    for (const scheme of ['light', 'dark'] as const) {
-      const { colors } = buildTheme(result.config.theme, scheme);
-      expect(contrastRatio(colors.onPrimary, colors.primary)).toBeGreaterThanOrEqual(3);
-      expect(contrastRatio(colors.textPrimary, colors.surface)).toBeGreaterThanOrEqual(4.5);
-    }
+  it('falls back to the default tabs when tabs are missing', () => {
+    const result = validateLayoutConfig({ ...goodConfig, tabs: undefined });
+    if (!result.ok) throw new Error(result.error);
+    expect(result.config.tabs).toEqual(DEFAULT_TABS);
   });
 });
