@@ -106,4 +106,4 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 4 | Booking flow: doctor list, date strip, slot bottom sheet, optimistic confirm, confirmation screen, Bookings tab | Committed |
 | 5 | Prescriptions: list, detail, morning / afternoon / night schedule, mark dose taken, today's reminders | Committed |
 | 6 | Hindi and Telugu, reminder notifications, dark-mode banner fix | Committed |
-| 7 | README, EAS build settings, pre-build checks, submission | In progress |
+| 7 | README, EAS build settings, pre-build checks, screenshots, demo video, APK | Committed |

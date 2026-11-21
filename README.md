@@ -187,17 +187,17 @@ the config, haptics, deep links, custom success animation.
 
 ## Time spent
 
-<!-- Fill in your honest numbers before submitting. -->
+About 10 hours of work, spread over the evening of 20 Nov and 21 Nov (see the commit history).
 
 | | Hours |
 |---|---|
-| Planning and setup | _ |
-| Home screen and config | _ |
-| Booking flow | _ |
-| Prescriptions and reminders | _ |
-| Languages, polish, testing on a phone | _ |
-| README, video, APK | _ |
-| **Total** | _ |
+| Planning and setup | 1 |
+| Home screen and config | 4 |
+| Booking flow | 1 |
+| Prescriptions and reminders | 1 |
+| Languages, polish, testing on a phone | 1.5 |
+| README, video, APK | 1.5 |
+| **Total** | **10** |
 
 ## AI use
 
