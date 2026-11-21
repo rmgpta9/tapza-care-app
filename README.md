@@ -7,9 +7,9 @@ prescriptions with a daily medicine schedule. React Native + Expo, TypeScript
 
 | Normal day | Diwali | Booking | Medicines |
 |---|---|---|---|
-| ![Normal day](docs/home-normal.png) | ![Diwali](docs/home-diwali.png) | ![Booking](docs/booking.png) | ![Medicines](docs/medicines.png) |
+| ![Normal day](docs/home-screen.jpeg) | ![Diwali](docs/diwali-home-screen.jpeg) | ![Booking](docs/bookings-screen.jpeg) | ![Medicines](docs/medicines-screen.jpeg) |
 
-Demo video: [docs/demo.mp4](docs/demo.mp4)
+Demo video: [docs/tapza-app.mp4](docs/tapza-app.mp4)
 
 ---
 
