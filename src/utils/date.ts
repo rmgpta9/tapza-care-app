@@ -22,3 +22,9 @@ export function addDays(dateString: string, days: number): string {
 export function dayOfWeek(dateString: string): number {
   return new Date(`${dateString}T00:00:00`).getDay();
 }
+
+// Whole days from `from` to `to`: daysBetween("2026-11-20", "2026-11-22") -> 2
+export function daysBetween(from: string, to: string): number {
+  const ms = new Date(`${to}T00:00:00`).getTime() - new Date(`${from}T00:00:00`).getTime();
+  return Math.round(ms / (24 * 60 * 60 * 1000));
+}

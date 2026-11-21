@@ -16,3 +16,7 @@ export function useSlots(doctorId: string, date: string | null) {
     enabled: date !== null,
   });
 }
+
+export function usePrescriptions() {
+  return useQuery({ queryKey: ['prescriptions'], queryFn: api.getPrescriptions });
+}

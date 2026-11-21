@@ -30,6 +30,14 @@ export function formatSlot(iso: string): string {
   return `${dayLabel}, ${formatTime(iso)}`;
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// "2026-11-20T11:15:00Z" -> "20 Nov"
+export function formatDate(iso: string): string {
+  const date = new Date(iso);
+  return `${date.getDate()} ${MONTHS[date.getMonth()]}`;
+}
+
 // "2026-11-24" -> { label: "Tue", day: "24" }  (label is "Today" / "Tomorrow" when it fits)
 export function dayParts(dateString: string): { label: string; day: string } {
   const date = new Date(`${dateString}T00:00:00`);
