@@ -52,6 +52,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Zustand for saved app state (no Redux) | Small stores, saved to the phone in one line |
 | Hand-written config validation (no zod) | Short, no extra dependency, easy to walk through |
 | Hard-coded colours only in `src/theme/colors.ts` | Everything else comes from the config, as the brief requires |
+| In dark mode, section bands use the theme background | Config band colours are light, so text on them would be unreadable in dark mode |
+| Header and reveal animations run on the UI thread (Reanimated) and only change opacity and position | Smooth on mid-range Android; reveal is skipped when the phone's "reduce motion" setting is on |
 
 ---
 
