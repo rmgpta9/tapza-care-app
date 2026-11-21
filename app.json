@@ -7,7 +7,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "ios": { "supportsTablet": false, "bundleIdentifier": "com.tapza.care" },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.tapza.care"
+    },
     "android": {
       "package": "com.tapza.care",
       "adaptiveIcon": {
@@ -18,13 +21,24 @@
       },
       "predictiveBackGestureEnabled": false
     },
-    "web": { "favicon": "./assets/favicon.png", "bundler": "metro" },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
     "plugins": [
       "expo-router",
       "expo-image",
       "expo-localization",
-      ["expo-notifications", { "color": "#0F766E" }]
+      [
+        "expo-notifications",
+        {
+          "color": "#0F766E"
+        }
+      ],
+      "expo-asset"
     ],
-    "experiments": { "typedRoutes": false }
+    "experiments": {
+      "typedRoutes": false
+    }
   }
 }
