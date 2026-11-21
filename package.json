@@ -55,6 +55,7 @@
       "^@/(.*)$": "<rootDir>/src/$1"
     },
     "setupFiles": [
+      "react-native-gesture-handler/jestSetup.js",
       "<rootDir>/jest.setup.ts"
     ],
     "testPathIgnorePatterns": [

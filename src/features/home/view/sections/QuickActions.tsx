@@ -7,9 +7,9 @@ import type { SectionProps } from './types';
 
 // Where each action goes. The config can only pick from this list, so it can't
 // send the user to a screen that doesn't exist.
-// TODO: point Book and Reminders at their own screens once they're built.
+// TODO: point Reminders at its own screen once it's built.
 const ACTION_ROUTES: Record<string, Href> = {
-  book: '/bookings',
+  book: '/doctors',
   prescriptions: '/prescriptions',
   reminders: '/prescriptions',
   family: '/profile',

@@ -7,3 +7,12 @@ import { api } from './endpoints';
 export function useDoctors() {
   return useQuery({ queryKey: ['doctors'], queryFn: api.getDoctors });
 }
+
+// Slots for one doctor on one day. Does nothing until both are known.
+export function useSlots(doctorId: string, date: string | null) {
+  return useQuery({
+    queryKey: ['slots', doctorId, date],
+    queryFn: () => api.getSlots(doctorId, date ?? ''),
+    enabled: date !== null,
+  });
+}

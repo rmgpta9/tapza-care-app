@@ -74,7 +74,7 @@ export function HeroBanner({ section, scrollY }: SectionProps) {
 
           {hero.ctaLabel && (
             <Pressable
-              onPress={() => router.push('/bookings')} // TODO: open the booking flow
+              onPress={() => router.push('/doctors')}
               accessibilityRole="button"
               style={({ pressed }) => [
                 styles.cta,

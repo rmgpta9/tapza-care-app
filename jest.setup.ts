@@ -19,5 +19,12 @@ jest.mock('react-native-reanimated', () => {
     interpolate: () => 0,
     withTiming: (value: unknown) => value,
     withRepeat: (value: unknown) => value,
+    withSpring: (value: unknown) => value,
+    withSequence: (...values: unknown[]) => values[values.length - 1],
   };
 });
+
+// Worklets runs code on the UI thread; in tests just call the function directly.
+jest.mock('react-native-worklets', () => ({
+  scheduleOnRN: (fn: (...args: unknown[]) => void, ...args: unknown[]) => fn(...args),
+}));

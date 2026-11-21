@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import { router } from 'expo-router';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText, Icon, SectionTitle } from '@/components';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees } from '@/utils/format';
@@ -13,6 +14,16 @@ interface Service {
   badge?: string;
   icon?: string;
   category?: string;
+  doctorId?: string; // who does this service; without it the card can't be booked
+}
+
+// Opens the booking screen for the service's doctor, with the service name and price.
+function openBooking(service: Service) {
+  if (!service.doctorId) return;
+  router.push({
+    pathname: '/book/[doctorId]',
+    params: { doctorId: service.doctorId, serviceName: service.name, priceInr: String(service.priceInr) },
+  });
 }
 
 function isService(value: unknown): value is Service {
@@ -20,7 +31,8 @@ function isService(value: unknown): value is Service {
     isObject(value) &&
     typeof value.id === 'string' &&
     typeof value.name === 'string' &&
-    typeof value.priceInr === 'number'
+    typeof value.priceInr === 'number' &&
+    (value.doctorId === undefined || typeof value.doctorId === 'string')
   );
 }
 
@@ -48,9 +60,13 @@ export function ServiceGrid({ section, selectedCategory }: SectionProps) {
         {toRows(services, columns).map((row, rowIndex) => (
           <View key={rowIndex} style={[styles.row, { gap: spacing.sm }]}>
             {row.map((service) => (
-              <View
+              <Pressable
                 key={service.id}
-                style={[
+                onPress={() => openBooking(service)}
+                disabled={!service.doctorId}
+                accessibilityRole="button"
+                accessibilityLabel={`${service.name}, ${formatRupees(service.priceInr)}`}
+                style={({ pressed }) => [
                   styles.card,
                   {
                     padding: spacing.md,
@@ -58,6 +74,7 @@ export function ServiceGrid({ section, selectedCategory }: SectionProps) {
                     borderRadius: radius.md,
                     borderColor: colors.border,
                     backgroundColor: colors.surface,
+                    opacity: pressed ? 0.85 : 1,
                   },
                 ]}
               >
@@ -92,7 +109,7 @@ export function ServiceGrid({ section, selectedCategory }: SectionProps) {
                     </AppText>
                   )}
                 </View>
-              </View>
+              </Pressable>
             ))}
 
             {/* empty spaces keep the last row's cards the same width as the others */}

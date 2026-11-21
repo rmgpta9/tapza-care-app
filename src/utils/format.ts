@@ -30,6 +30,15 @@ export function formatSlot(iso: string): string {
   return `${dayLabel}, ${formatTime(iso)}`;
 }
 
+// "2026-11-24" -> { label: "Tue", day: "24" }  (label is "Today" / "Tomorrow" when it fits)
+export function dayParts(dateString: string): { label: string; day: string } {
+  const date = new Date(`${dateString}T00:00:00`);
+  let label = WEEKDAYS[date.getDay()] ?? '';
+  if (dateString === today()) label = 'Today';
+  if (dateString === addDays(today(), 1)) label = 'Tomorrow';
+  return { label, day: String(date.getDate()) };
+}
+
 // "Good morning" / "Good afternoon" / "Good evening"
 export function greeting(): string {
   const hour = new Date().getHours();

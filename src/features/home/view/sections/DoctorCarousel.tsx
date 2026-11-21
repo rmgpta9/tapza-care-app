@@ -1,8 +1,8 @@
-import { Image } from 'expo-image';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { router } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useDoctors } from '@/api/queries';
 import type { Doctor } from '@/api/types';
-import { AppText, Notice, SectionTitle, Skeleton } from '@/components';
+import { AppText, DoctorAvatar, Notice, SectionTitle, Skeleton } from '@/components';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees, formatSlot } from '@/utils/format';
 import { isObject } from '@/utils/isObject';
@@ -10,16 +10,6 @@ import type { SectionProps } from './types';
 
 const CARD_WIDTH = 250;
 const PHOTO_SIZE = 56;
-
-// "Dr. Ananya Reddy" -> "AR"
-function initials(name: string): string {
-  return name
-    .replace('Dr. ', '')
-    .split(' ')
-    .map((word) => word[0])
-    .slice(0, 2)
-    .join('');
-}
 
 // Horizontal cards: photo, name, specialty, languages and next available slot.
 // The config lists which doctors to show; their details come from GET /doctors.
@@ -65,20 +55,24 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
   const { colors, spacing, radius } = useTheme();
 
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={() => router.push(`/book/${doctor.id}`)}
+      accessibilityRole="button"
+      accessibilityLabel={`Book ${doctor.name}, ${doctor.specialty}`}
+      style={({ pressed }) => [
         styles.card,
-        { padding: spacing.lg, gap: spacing.sm, borderRadius: radius.lg, borderColor: colors.border, backgroundColor: colors.surface },
+        {
+          padding: spacing.lg,
+          gap: spacing.sm,
+          borderRadius: radius.lg,
+          borderColor: colors.border,
+          backgroundColor: colors.surface,
+          opacity: pressed ? 0.85 : 1,
+        },
       ]}
     >
       <View style={[styles.row, { gap: spacing.md }]}>
-        <View style={[styles.photo, { backgroundColor: colors.primarySoft }]}>
-          {/* initials show underneath, so they're visible if the photo fails to load */}
-          <AppText variant="bodyBold" color="primary">
-            {initials(doctor.name)}
-          </AppText>
-          <Image source={{ uri: doctor.photoUrl }} style={StyleSheet.absoluteFill} transition={200} />
-        </View>
+        <DoctorAvatar name={doctor.name} photoUrl={doctor.photoUrl} size={PHOTO_SIZE} />
         <View style={styles.flex}>
           <AppText variant="bodyBold" numberOfLines={1}>
             {doctor.name}
@@ -117,7 +111,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
           </AppText>
         </AppText>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -149,13 +143,5 @@ const styles = StyleSheet.create({
   card: { width: CARD_WIDTH, borderWidth: 1 },
   row: { flexDirection: 'row', alignItems: 'center' },
   flex: { flex: 1 },
-  photo: {
-    width: PHOTO_SIZE,
-    height: PHOTO_SIZE,
-    borderRadius: PHOTO_SIZE / 2,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   slot: { alignSelf: 'flex-start' },
 });

@@ -62,6 +62,10 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Screens live in `features/<name>/view`; route files only re-export them | One place per screen; `src/app` stays a plain list of routes |
 | `SectionRenderer` sits next to the sections in `features/home/view` | It imports every section; in common components it would make them depend on the home feature and create an import loop |
 | Unknown section types render nothing; each section has its own error boundary | A new or broken section can't crash the home screen |
+| Optimistic booking: the booking shows as "confirming" at once, then becomes "confirmed" or "failed" when the server answers | Confirming feels instant, as the brief asks; a 409 shows "That time was just taken" and the failed booking is removed |
+| Bottom sheet built with Gesture Handler + Reanimated, no sheet library | The drag runs on the UI thread, and it's one short file to explain |
+| One shared React Query client in `src/api/queryClient.ts` | The bookings store can refresh slots after a booking |
+| No offline booking queue | Kept the flow simple; offline shows "Couldn't book" with Try again |
 
 ---
 
@@ -75,6 +79,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | After switching config, some sections stayed invisible (same section ids, stale position) | Section keys include the config version, so sections remount and animate in again |
 | Reanimated 4.7's official Jest mock starts its native engine and fails | Small hand-written mock of the Reanimated functions the app uses, in `jest.setup.ts` |
 | `render` in Testing Library v14 is asynchronous | Tests `await render(...)` |
+| 12:10 and 12:30 PM slots showed under "Evening" | Slots are split into Morning / Evening at 2 PM, between the clinic's two sessions |
+| The bottom sheet's gesture code broke the test setup | Added Gesture Handler's own Jest setup file and a 3-line Worklets mock |
 
 ---
 
@@ -84,4 +90,5 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 |---|---|---|
 | 1 | Project setup, config types, validation, theme | Committed |
 | 2 | Mock backend, demo controls, saved config, tab bar from config, simplification | Committed |
-| 3 | Config-driven home screen: six section types, header, animations, skeleton; feature folders | In progress |
+| 3 | Config-driven home screen: six section types, header, animations, skeleton; feature folders | Committed |
+| 4 | Booking flow: doctor list, date strip, slot bottom sheet, optimistic confirm, confirmation screen, Bookings tab | Committed |
