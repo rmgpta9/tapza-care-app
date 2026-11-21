@@ -72,6 +72,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Expo Router's custom tab bar API changed in SDK 58 (no `navigation` prop) | Rewritten to use `navigateToTab`, matching the library's own tab bar |
 | React Native's `URL` doesn't fully support `searchParams` | Query string parsed with a small helper in the mock server |
 | The icon font loader needs `expo-asset`, which was only installed inside Expo's own folder | Installed it with `npx expo install expo-asset` |
+| After switching config, some sections stayed invisible (same section ids, stale position) | Section keys include the config version, so sections remount and animate in again |
 
 ---
 

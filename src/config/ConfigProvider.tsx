@@ -18,6 +18,7 @@ interface ConfigContextValue {
   config: LayoutConfig;
   source: ConfigSource;
   isLoading: boolean;
+  isFirstLoad: boolean; // first launch: nothing saved yet and the first fetch is still running
   error: Error | null;
   retry: () => void;
 }
@@ -56,6 +57,7 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
     config,
     source,
     isLoading: query.isFetching,
+    isFirstLoad: !query.data && !savedConfig && query.isPending,
     error: query.error,
     retry: () => query.refetch(),
   };
