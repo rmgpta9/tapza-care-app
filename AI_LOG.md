@@ -22,6 +22,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 5 | "The code is over-complicated, even the theme has lots of calculations." | Simplification pass, listed in the next table. |
 | 6 | "In features, put components in a components folder and utils in a utils folder. Add a view folder for the screens and an index.ts in every folder. Code should not be over-complicated." | Each feature has a `view/` folder for its screen and an `index.ts` in every folder; route files are one line. |
 | 7 | "Don't add components and utils under home; add them to the common components and utils folders." | Shared UI in `src/components`, helpers in `src/utils`. |
+| 8 | "Move sections back under home/view." | The six section components and `SectionRenderer` live in `features/home/view`. |
 
 ---
 
@@ -42,6 +43,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Validation with warning lists, contrast checks and a custom error class | More than the app uses | Validation returns `{ ok, config }` or `{ ok, error }` |
 | A `lib/` folder for small helpers | Unclear name | `utils/` |
 | `components/` and `utils/` folders inside each feature | I wanted one shared place for them | Common `src/components` and `src/utils` |
+| Dark maroon Diwali offer band with dark text on it | Unreadable | Light gold gradient in the Diwali config |
 
 ---
 
@@ -58,6 +60,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | In dark mode, section bands use the theme background | Config band colours are light, so text on them would be unreadable in dark mode |
 | Header and reveal animations run on the UI thread (Reanimated) and only change opacity and position | Smooth on mid-range Android; reveal is skipped when the phone's "reduce motion" setting is on |
 | Screens live in `features/<name>/view`; route files only re-export them | One place per screen; `src/app` stays a plain list of routes |
+| `SectionRenderer` sits next to the sections in `features/home/view` | It imports every section; in common components it would make them depend on the home feature and create an import loop |
+| Unknown section types render nothing; each section has its own error boundary | A new or broken section can't crash the home screen |
 
 ---
 

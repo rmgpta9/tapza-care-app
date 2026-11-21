@@ -168,7 +168,7 @@ export const DIWALI_CONFIG = {
     {
       id: 'diwali-offer',
       type: 'offer_strip',
-      background: { kind: 'gradient', value: '90deg,#7C2D12,#B45309' },
+      background: { kind: 'gradient', value: '90deg,#FDE7C7,#FBD38D' },
       title: '',
       items: [{ message: 'Diwali health week · up to 40% off family packages', icon: 'sparkles' }],
     },
