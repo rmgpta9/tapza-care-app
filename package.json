@@ -46,7 +46,8 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build:apk": "eas build -p android --profile preview"
   },
   "private": true,
   "jest": {
