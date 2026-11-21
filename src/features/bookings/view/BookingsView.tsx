@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { AppText, Button, Card, EmptyState, Screen } from '@/components';
+import { useT } from '@/i18n';
 import { useBookings, type Booking } from '@/store/bookings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees, formatSlot } from '@/utils/format';
@@ -9,18 +10,19 @@ import { formatRupees, formatSlot } from '@/utils/format';
 // Failed bookings aren't shown; the user already saw that on the booking screen.
 export function BookingsView() {
   const { spacing } = useTheme();
+  const t = useT();
   const bookings = useBookings((s) => s.bookings)
     .filter((b) => b.status !== 'failed')
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 
   return (
-    <Screen title="Bookings" subtitle="Your upcoming visits">
+    <Screen title={t('bookings.title')} subtitle={t('bookings.subtitle')}>
       {bookings.length === 0 ? (
         <EmptyState
           icon="calendar-outline"
-          title="No visits booked yet"
-          message="Book a doctor or a lab test and it will show up here."
-          actionLabel="Book a visit"
+          title={t('bookings.emptyTitle')}
+          message={t('bookings.emptyMessage')}
+          actionLabel={t('bookings.bookVisit')}
           onAction={() => router.push('/doctors')}
         />
       ) : (
@@ -29,7 +31,12 @@ export function BookingsView() {
             <BookingCard key={booking.id} booking={booking} />
           ))}
           <View style={{ marginTop: spacing.sm }}>
-            <Button label="Book another visit" variant="outline" icon="add" onPress={() => router.push('/doctors')} />
+            <Button
+              label={t('bookings.bookAnother')}
+              variant="outline"
+              icon="add"
+              onPress={() => router.push('/doctors')}
+            />
           </View>
         </>
       )}
@@ -39,6 +46,7 @@ export function BookingsView() {
 
 function BookingCard({ booking }: { booking: Booking }) {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
   const confirmed = booking.status === 'confirmed';
 
   return (
@@ -56,7 +64,7 @@ function BookingCard({ booking }: { booking: Booking }) {
           }}
         >
           <AppText variant="label" color={confirmed ? 'success' : 'primary'}>
-            {confirmed ? 'Confirmed' : 'Confirming…'}
+            {confirmed ? t('bookings.confirmed') : t('bookings.confirming')}
           </AppText>
         </View>
       </View>
@@ -67,7 +75,7 @@ function BookingCard({ booking }: { booking: Booking }) {
       </AppText>
       {booking.serverId && (
         <AppText variant="small" color="textSecondary">
-          Booking ID {booking.serverId}
+          {t('status.bookingId', { id: booking.serverId })}
         </AppText>
       )}
     </Card>

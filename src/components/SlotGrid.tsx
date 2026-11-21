@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { Slot } from '@/api/types';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { TAP_TARGET } from '@/theme/tokens';
 import { formatTime } from '@/utils/format';
@@ -14,6 +15,7 @@ interface SlotGridProps {
 // Time buttons split into "Morning" and "Evening". Booked slots are greyed out.
 export function SlotGrid({ slots, selectedId, onSelect }: SlotGridProps) {
   const { spacing } = useTheme();
+  const t = useT();
 
   // The clinic's morning session ends before 1 PM and the evening one starts after 4 PM,
   // so 2 PM is a safe place to split them.
@@ -22,14 +24,15 @@ export function SlotGrid({ slots, selectedId, onSelect }: SlotGridProps) {
 
   return (
     <View style={{ gap: spacing.lg }}>
-      <SlotGroup title="Morning" slots={morning} selectedId={selectedId} onSelect={onSelect} />
-      <SlotGroup title="Evening" slots={evening} selectedId={selectedId} onSelect={onSelect} />
+      <SlotGroup title={t('slots.morning')} slots={morning} selectedId={selectedId} onSelect={onSelect} />
+      <SlotGroup title={t('slots.evening')} slots={evening} selectedId={selectedId} onSelect={onSelect} />
     </View>
   );
 }
 
 function SlotGroup({ title, slots, selectedId, onSelect }: SlotGridProps & { title: string }) {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
   if (slots.length === 0) return null;
 
   return (
@@ -47,7 +50,7 @@ function SlotGroup({ title, slots, selectedId, onSelect }: SlotGridProps & { tit
               onPress={() => onSelect(slot)}
               accessibilityRole="button"
               accessibilityState={{ selected, disabled: !slot.available }}
-              accessibilityLabel={`${formatTime(slot.startsAt)}${slot.available ? '' : ', booked'}`}
+              accessibilityLabel={`${formatTime(slot.startsAt)}${slot.available ? '' : `, ${t('slots.booked')}`}`}
               style={[
                 styles.slot,
                 {

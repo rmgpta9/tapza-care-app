@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useDoctors } from '@/api/queries';
 import type { Doctor } from '@/api/types';
 import { AppText, DoctorAvatar, Notice, SectionTitle, Skeleton } from '@/components';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees, formatSlot } from '@/utils/format';
 import { isObject } from '@/utils/isObject';
@@ -15,6 +16,7 @@ const PHOTO_SIZE = 56;
 // The config lists which doctors to show; their details come from GET /doctors.
 export function DoctorCarousel({ section }: SectionProps) {
   const { spacing } = useTheme();
+  const t = useT();
   const { data: doctors, isLoading, error, refetch } = useDoctors();
 
   const wantedIds = section.items
@@ -34,7 +36,7 @@ export function DoctorCarousel({ section }: SectionProps) {
 
       {error ? (
         <View style={{ paddingHorizontal: spacing.lg }}>
-          <Notice message="Couldn't load doctors." actionLabel="Retry" onAction={() => refetch()} />
+          <Notice message={t('home.doctorsFailed')} actionLabel={t('common.retry')} onAction={() => refetch()} />
         </View>
       ) : (
         <ScrollView
@@ -53,12 +55,13 @@ export function DoctorCarousel({ section }: SectionProps) {
 
 function DoctorCard({ doctor }: { doctor: Doctor }) {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
 
   return (
     <Pressable
       onPress={() => router.push(`/book/${doctor.id}`)}
       accessibilityRole="button"
-      accessibilityLabel={`Book ${doctor.name}, ${doctor.specialty}`}
+      accessibilityLabel={`${doctor.name}, ${doctor.specialty}`}
       style={({ pressed }) => [
         styles.card,
         {
@@ -84,7 +87,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
       </View>
 
       <AppText variant="small" color="textSecondary" numberOfLines={1}>
-        Speaks {doctor.languages.join(', ')}
+        {t('common.speaks', { languages: doctor.languages.join(', ') })}
       </AppText>
 
       <View
@@ -99,7 +102,9 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         ]}
       >
         <AppText variant="label" color={doctor.nextAvailableAt ? 'success' : 'warning'}>
-          {doctor.nextAvailableAt ? `Next: ${formatSlot(doctor.nextAvailableAt)}` : 'No slots this week'}
+          {doctor.nextAvailableAt
+            ? t('common.next', { slot: formatSlot(doctor.nextAvailableAt) })
+            : t('common.noSlotsThisWeek')}
         </AppText>
       </View>
 
@@ -107,7 +112,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         <AppText variant="bodyBold">
           {formatRupees(doctor.feeInr)}{' '}
           <AppText variant="small" color="textSecondary">
-            consultation
+            {t('common.consultation')}
           </AppText>
         </AppText>
       )}

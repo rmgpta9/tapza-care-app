@@ -2,6 +2,8 @@ import type { BottomTabBarProps } from 'expo-router/tabs';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useLayoutConfig } from '@/config/ConfigProvider';
+import { useT } from '@/i18n';
+import { useSettings } from '@/store/settings';
 import type { ScreenId } from '@/config/types';
 import { useTheme } from '@/theme/ThemeProvider';
 import { TAP_TARGET } from '@/theme/tokens';
@@ -20,6 +22,8 @@ const ROUTE_NAME: Record<ScreenId, string> = {
 export function ConfigTabBar({ state, navigateToTab }: BottomTabBarProps) {
   const { config } = useLayoutConfig();
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
+  const language = useSettings((s) => s.language);
   const insets = useSafeAreaInsets();
 
   return (
@@ -40,6 +44,8 @@ export function ConfigTabBar({ state, navigateToTab }: BottomTabBarProps) {
 
         const isActive = state.routes[state.index]?.key === route.key;
         const color = isActive ? 'primary' : 'textSecondary';
+        // Config labels are English; for Hindi / Telugu use our translation of the screen name.
+        const label = language === 'en' ? tab.label : t(`tab.${tab.screen}`);
 
         return (
           <Pressable
@@ -47,7 +53,7 @@ export function ConfigTabBar({ state, navigateToTab }: BottomTabBarProps) {
             onPress={() => navigateToTab(route.key)}
             accessibilityRole="tab"
             accessibilityState={{ selected: isActive }}
-            accessibilityLabel={tab.label}
+            accessibilityLabel={label}
             style={[styles.tab, { minHeight: TAP_TARGET }]}
           >
             <View
@@ -61,7 +67,7 @@ export function ConfigTabBar({ state, navigateToTab }: BottomTabBarProps) {
               <Icon name={tab.icon} color={color} />
             </View>
             <AppText variant="label" color={color} numberOfLines={1}>
-              {tab.label}
+              {label}
             </AppText>
           </Pressable>
         );

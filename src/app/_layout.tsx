@@ -8,6 +8,9 @@ import { queryClient } from '@/api/queryClient';
 import { ConfigProvider } from '@/config/ConfigProvider';
 import { loadSavedData } from '@/store/loadSavedData';
 import { ThemeProvider, useTheme } from '@/theme/ThemeProvider';
+import { openRemindersOnTap, setUpNotifications } from '@/utils/notifications';
+
+setUpNotifications();
 
 function AppStack() {
   const { scheme, colors } = useTheme();
@@ -36,6 +39,9 @@ export default function RootLayout() {
   useEffect(() => {
     loadSavedData().finally(() => setReady(true));
   }, []);
+
+  // Tapping a medicine reminder opens today's reminders.
+  useEffect(() => openRemindersOnTap(), []);
 
   return (
     <GestureHandlerRootView style={styles.fill}>

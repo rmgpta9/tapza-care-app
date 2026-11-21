@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText, Button, EmptyState, StatusIcon } from '@/components';
+import { useT } from '@/i18n';
 import { newBookingId, useBookings, type Booking } from '@/store/bookings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees, formatSlot } from '@/utils/format';
@@ -12,6 +13,7 @@ import { formatRupees, formatSlot } from '@/utils/format';
 // "confirming"; this screen updates by itself when the server answers.
 export function BookingStatusView() {
   const { spacing } = useTheme();
+  const t = useT();
   const insets = useSafeAreaInsets();
   const { bookingId } = useLocalSearchParams<{ bookingId: string }>();
   const booking = useBookings((s) => s.bookings.find((b) => b.id === bookingId));
@@ -29,9 +31,9 @@ export function BookingStatusView() {
       <View style={[styles.screen, { paddingTop: insets.top, padding: spacing.lg }]}>
         <EmptyState
           icon="help-circle-outline"
-          title="Booking not found"
-          message="It may have been removed."
-          actionLabel="Go home"
+          title={t('status.notFoundTitle')}
+          message={t('status.notFoundMessage')}
+          actionLabel={t('status.goHome')}
           onAction={() => router.dismissTo('/')}
         />
       </View>
@@ -51,12 +53,12 @@ export function BookingStatusView() {
   }
 
   const text = {
-    confirming: { title: 'Confirming your visit…', message: 'This usually takes a second.' },
-    confirmed: { title: 'Visit booked', message: `Booking ID ${booking.serverId ?? ''}` },
+    confirming: { title: t('status.confirmingTitle'), message: t('status.confirmingMessage') },
+    confirmed: { title: t('status.confirmedTitle'), message: t('status.bookingId', { id: booking.serverId ?? '' }) },
     failed:
       booking.failure === 'slot_taken'
-        ? { title: 'That time was just taken', message: 'Someone booked it a moment ago. Please pick another time.' }
-        : { title: "Couldn't book your visit", message: "The clinic didn't respond, so nothing was booked." },
+        ? { title: t('status.slotTakenTitle'), message: t('status.slotTakenMessage') }
+        : { title: t('status.failedTitle'), message: t('status.failedMessage') },
   }[booking.status];
 
   return (
@@ -87,19 +89,19 @@ export function BookingStatusView() {
 
       <View style={{ gap: spacing.sm }}>
         {booking.status === 'failed' && booking.failure === 'other' && (
-          <Button label="Try again" onPress={() => tryAgain(booking)} />
+          <Button label={t('common.tryAgain')} onPress={() => tryAgain(booking)} />
         )}
         {booking.status === 'failed' && (
           <Button
-            label="Pick another time"
+            label={t('status.pickAnotherTime')}
             variant={booking.failure === 'slot_taken' ? 'primary' : 'outline'}
             onPress={() => pickAnotherTime(booking)}
           />
         )}
         {booking.status !== 'failed' && (
           <>
-            <Button label="View my bookings" onPress={() => router.dismissTo('/bookings')} />
-            <Button label="Back to home" variant="outline" onPress={() => router.dismissTo('/')} />
+            <Button label={t('status.viewBookings')} onPress={() => router.dismissTo('/bookings')} />
+            <Button label={t('status.backHome')} variant="outline" onPress={() => router.dismissTo('/')} />
           </>
         )}
       </View>

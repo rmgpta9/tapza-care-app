@@ -2,17 +2,19 @@ import { router, Stack } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useDoctors } from '@/api/queries';
 import { AppText, DoctorAvatar, EmptyState, Skeleton } from '@/components';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatRupees, formatSlot } from '@/utils/format';
 
 // List of all doctors. Tapping one opens the booking screen for that doctor.
 export function DoctorListView() {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
   const { data: doctors, isLoading, error, refetch } = useDoctors();
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, title: 'Choose a doctor' }} />
+      <Stack.Screen options={{ headerShown: true, title: t('doctors.title') }} />
       <ScrollView contentContainerStyle={{ padding: spacing.lg, gap: spacing.md }}>
         {isLoading &&
           [1, 2, 3, 4].map((n) => (
@@ -28,19 +30,15 @@ export function DoctorListView() {
         {error && (
           <EmptyState
             icon="cloud-offline-outline"
-            title="Couldn't load doctors"
-            message="Please check your connection and try again."
-            actionLabel="Try again"
+            title={t('doctors.failedTitle')}
+            message={t('common.offline')}
+            actionLabel={t('common.tryAgain')}
             onAction={() => refetch()}
           />
         )}
 
         {doctors?.length === 0 && (
-          <EmptyState
-            icon="people-outline"
-            title="No doctors available"
-            message="Please check again later, or call the clinic."
-          />
+          <EmptyState icon="people-outline" title={t('doctors.emptyTitle')} message={t('doctors.emptyMessage')} />
         )}
 
         {doctors?.map((doctor) => (
@@ -48,7 +46,7 @@ export function DoctorListView() {
             key={doctor.id}
             onPress={() => router.push(`/book/${doctor.id}`)}
             accessibilityRole="button"
-            accessibilityLabel={`Book ${doctor.name}, ${doctor.specialty}`}
+            accessibilityLabel={`${doctor.name}, ${doctor.specialty}`}
             style={({ pressed }) => [
               styles.row,
               {
@@ -70,7 +68,9 @@ export function DoctorListView() {
                 {doctor.feeInr > 0 ? ` · ${formatRupees(doctor.feeInr)}` : ''}
               </AppText>
               <AppText variant="label" color={doctor.nextAvailableAt ? 'success' : 'warning'}>
-                {doctor.nextAvailableAt ? `Next: ${formatSlot(doctor.nextAvailableAt)}` : 'No slots this week'}
+                {doctor.nextAvailableAt
+                  ? t('common.next', { slot: formatSlot(doctor.nextAvailableAt) })
+                  : t('common.noSlotsThisWeek')}
               </AppText>
             </View>
           </Pressable>

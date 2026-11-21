@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { Prescription } from '@/api/types';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatDate } from '@/utils/format';
 import { daysLeft, isPrescriptionActive } from '@/utils/prescriptions';
@@ -10,6 +11,7 @@ import { Icon } from './Icon';
 // One prescription in the list: doctor, date, who it's for and whether it's still running.
 export function PrescriptionCard({ prescription }: { prescription: Prescription }) {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
   const active = isPrescriptionActive(prescription);
   const left = daysLeft(prescription);
   const count = prescription.medicines.length;
@@ -44,7 +46,7 @@ export function PrescriptionCard({ prescription }: { prescription: Prescription 
           }}
         >
           <AppText variant="label" color={active ? 'success' : 'textSecondary'}>
-            {active ? `${left} ${left === 1 ? 'day' : 'days'} left` : 'Completed'}
+            {active ? (left === 1 ? t('rx.oneDayLeft') : t('rx.daysLeft', { count: left })) : t('rx.completed')}
           </AppText>
         </View>
       </View>
@@ -58,8 +60,8 @@ export function PrescriptionCard({ prescription }: { prescription: Prescription 
       <View style={[styles.row, { gap: spacing.xs, marginTop: spacing.xs }]}>
         <Icon name="medkit-outline" size={16} color="primary" />
         <AppText variant="label" color="primary" style={styles.flex}>
-          {count} {count === 1 ? 'medicine' : 'medicines'}
-          {prescription.patientName ? ` · for ${prescription.patientName}` : ''}
+          {count === 1 ? t('rx.oneMedicine') : t('rx.medicines', { count })}
+          {prescription.patientName ? ` · ${t('rx.forPatient', { name: prescription.patientName })}` : ''}
         </AppText>
         <Icon name="chevron-forward" size={18} color="textSecondary" />
       </View>

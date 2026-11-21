@@ -23,7 +23,7 @@ export const NORMAL_CONFIG = {
     accent: '#F59E0B',
     dark: {
       primary: '#0D9488',
-      secondary: '#67E8F9',
+      secondary: '#155E75',
       background: '#0B1413',
       surface: '#14211F',
       textPrimary: '#E8F1EF',
@@ -150,7 +150,7 @@ export const DIWALI_CONFIG = {
     },
     dark: {
       primary: '#C2410C',
-      secondary: '#FDBA74',
+      secondary: '#7C2D12',
       background: '#170D07',
       surface: '#24150C',
       textPrimary: '#FBEFE4',

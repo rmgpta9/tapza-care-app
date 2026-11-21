@@ -23,6 +23,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 6 | "In features, put components in a components folder and utils in a utils folder. Add a view folder for the screens and an index.ts in every folder. Code should not be over-complicated." | Each feature has a `view/` folder for its screen and an `index.ts` in every folder; route files are one line. |
 | 7 | "Don't add components and utils under home; add them to the common components and utils folders." | Shared UI in `src/components`, helpers in `src/utils`. |
 | 8 | "Move sections back under home/view." | The six section components and `SectionRenderer` live in `features/home/view`. |
+| 9 | "Yes, both" (add medicine reminder notifications and Hindi/Telugu in step 6) | Daily reminder notifications and a translation layer with English, Hindi and Telugu |
 
 ---
 
@@ -66,6 +67,13 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Bottom sheet built with Gesture Handler + Reanimated, no sheet library | The drag runs on the UI thread, and it's one short file to explain |
 | One shared React Query client in `src/api/queryClient.ts` | The bookings store can refresh slots after a booking |
 | No offline booking queue | Kept the flow simple; offline shows "Couldn't book" with Try again |
+| The prescription screen finds its prescription in the already-loaded list | The brief's API has no `GET /prescriptions/:id` |
+| "Taken" is saved per day: the date is part of each dose's key | Every day starts fresh without any clean-up code |
+| A medicine drops off today's schedule once its course is over | Matches how a patient actually takes a 3-day and a 5-day medicine together |
+| Own small translation layer (no i18n library): one file per language | Short and easy to explain; TypeScript fails the build if a language misses a key |
+| Server and config content (doctor and medicine names, section titles) is not translated; demo controls stay in English | That text would come translated from the backend; demo controls are for reviewers, not patients |
+| Weekday and month names come from the phone's date formatting for the chosen language | No hand-written lists of names in three languages |
+| Reminders: one daily notification per time of day that has medicines, after asking permission | No reminders at times with no medicines; tapping one opens today's reminders |
 
 ---
 
@@ -81,6 +89,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | `render` in Testing Library v14 is asynchronous | Tests `await render(...)` |
 | 12:10 and 12:30 PM slots showed under "Evening" | Slots are split into Morning / Evening at 2 PM, between the clinic's two sessions |
 | The bottom sheet's gesture code broke the test setup | Added Gesture Handler's own Jest setup file and a 3-line Worklets mock |
+| In dark mode the home banner faded into a light colour, so its white text was hard to read | Darker dark-mode `secondary` colour in both configs |
+| ESLint couldn't find `AndroidImportance` through `import * as Notifications` | Imported it by name instead |
 
 ---
 
@@ -92,3 +102,5 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 2 | Mock backend, demo controls, saved config, tab bar from config, simplification | Committed |
 | 3 | Config-driven home screen: six section types, header, animations, skeleton; feature folders | Committed |
 | 4 | Booking flow: doctor list, date strip, slot bottom sheet, optimistic confirm, confirmation screen, Bookings tab | Committed |
+| 5 | Prescriptions: list, detail, morning / afternoon / night schedule, mark dose taken, today's reminders | Committed |
+| 6 | Hindi and Telugu, reminder notifications, dark-mode banner fix | Committed |

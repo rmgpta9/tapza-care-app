@@ -2,6 +2,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { usePrescriptions } from '@/api/queries';
 import { AppText, Card, DoseSchedule, EmptyState, Skeleton } from '@/components';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { formatDate } from '@/utils/format';
 import { courseDay, daysLeft, isPrescriptionActive, todaysDoses } from '@/utils/prescriptions';
@@ -10,11 +11,12 @@ import { courseDay, daysLeft, isPrescriptionActive, todaysDoses } from '@/utils/
 // There's no GET /prescriptions/:id in the API, so it's found in the list (already cached).
 export function PrescriptionDetailView() {
   const { colors, spacing, radius } = useTheme();
+  const t = useT();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: prescriptions, isLoading } = usePrescriptions();
   const prescription = prescriptions?.find((p) => p.id === id);
 
-  const header = <Stack.Screen options={{ headerShown: true, title: 'Prescription' }} />;
+  const header = <Stack.Screen options={{ headerShown: true, title: t('rx.detailTitle') }} />;
 
   if (isLoading) {
     return (
@@ -34,9 +36,9 @@ export function PrescriptionDetailView() {
         {header}
         <EmptyState
           icon="document-text-outline"
-          title="Prescription not found"
-          message="It may have been removed by the clinic."
-          actionLabel="Back to medicines"
+          title={t('rx.notFoundTitle')}
+          message={t('rx.notFoundMessage')}
+          actionLabel={t('rx.backToMedicines')}
           onAction={() => router.back()}
         />
       </View>
@@ -55,8 +57,8 @@ export function PrescriptionDetailView() {
         <AppText variant="heading">{prescription.doctorName}</AppText>
         <AppText color="textSecondary">{prescription.clinicName}</AppText>
         <AppText variant="small" color="textSecondary">
-          Issued {formatDate(prescription.issuedAt)}
-          {prescription.patientName ? ` · for ${prescription.patientName}` : ''}
+          {t('rx.issued', { date: formatDate(prescription.issuedAt) })}
+          {prescription.patientName ? ` · ${t('rx.forPatient', { name: prescription.patientName })}` : ''}
         </AppText>
         {prescription.diagnosis && (
           <AppText variant="bodyBold" style={{ marginTop: spacing.sm }}>
@@ -65,20 +67,20 @@ export function PrescriptionDetailView() {
         )}
         <AppText variant="label" color={active ? 'success' : 'textSecondary'} style={{ marginTop: spacing.sm }}>
           {active
-            ? `Day ${courseDay(prescription)} of ${longest} · ${daysLeft(prescription)} days left`
-            : 'Course completed'}
+            ? t('rx.courseDay', { day: courseDay(prescription), total: longest, left: daysLeft(prescription) })
+            : t('rx.courseCompleted')}
         </AppText>
       </Card>
 
-      <AppText variant="title">Today</AppText>
+      <AppText variant="title">{t('rx.today')}</AppText>
       {doses.length > 0 ? (
         <DoseSchedule doses={doses} />
       ) : (
-        <AppText color="textSecondary">No doses today. This course is complete.</AppText>
+        <AppText color="textSecondary">{t('rx.noDosesToday')}</AppText>
       )}
 
       <AppText variant="title" style={{ marginTop: spacing.sm }}>
-        All medicines
+        {t('rx.allMedicines')}
       </AppText>
       {prescription.medicines.map((medicine) => (
         <View
@@ -97,11 +99,11 @@ export function PrescriptionDetailView() {
               {medicine.name}
             </AppText>
             <AppText variant="label" color="textSecondary">
-              {medicine.days} days
+              {t('rx.days', { count: medicine.days })}
             </AppText>
           </View>
           <AppText variant="small" color="textSecondary">
-            {medicine.dose} · {medicine.timing.map((t) => t[0]?.toUpperCase() + t.slice(1)).join(', ')}
+            {medicine.dose} · {medicine.timing.map((timing) => t(`dose.${timing}`)).join(', ')}
           </AppText>
           {medicine.instructions && (
             <AppText variant="small" color="textSecondary">

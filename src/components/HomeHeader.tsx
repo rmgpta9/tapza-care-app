@@ -4,6 +4,7 @@ import Animated, { interpolate, useAnimatedStyle, type SharedValue } from 'react
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from './AppText';
 import { Icon } from './Icon';
+import { useT } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 import { TAP_TARGET } from '@/theme/tokens';
 
@@ -22,6 +23,7 @@ export function useHomeHeaderHeight(): number {
 export function HomeHeader({ scrollY }: { scrollY: SharedValue<number> }) {
   const { colors, spacing } = useTheme();
   const insets = useSafeAreaInsets();
+  const t = useT();
 
   const slideUp = useAnimatedStyle(() => ({
     transform: [{ translateY: -interpolate(scrollY.value, [0, LOCATION_ROW_HEIGHT], [0, LOCATION_ROW_HEIGHT], 'clamp') }],
@@ -52,7 +54,7 @@ export function HomeHeader({ scrollY }: { scrollY: SharedValue<number> }) {
           <Pressable
             onPress={() => router.push('/profile')}
             accessibilityRole="button"
-            accessibilityLabel="Open profile"
+            accessibilityLabel={t('home.openProfile')}
             style={[styles.iconButton, { width: TAP_TARGET, height: TAP_TARGET }]}
           >
             <Icon name="person-circle-outline" size={32} color="primary" />

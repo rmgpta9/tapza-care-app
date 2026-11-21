@@ -1,0 +1,142 @@
+// All text the app writes itself. Hindi and Telugu must have the same keys
+// (TypeScript checks this). {name} parts are filled in when the text is used.
+//
+// Not translated here: content from the server or config (doctor names,
+// specialties, medicine names, section titles, offers). Those would come
+// translated from the backend.
+
+export const en = {
+  // tabs (labels come from the config in English; other languages use these)
+  'tab.home': 'Home',
+  'tab.bookings': 'Bookings',
+  'tab.prescriptions': 'Medicines',
+  'tab.profile': 'Profile',
+
+  // common
+  'common.retry': 'Retry',
+  'common.retrying': 'Retrying…',
+  'common.tryAgain': 'Try again',
+  'common.today': 'Today',
+  'common.tomorrow': 'Tomorrow',
+  'common.speaks': 'Speaks {languages}',
+  'common.next': 'Next: {slot}',
+  'common.noSlotsThisWeek': 'No slots this week',
+  'common.consultation': 'consultation',
+  'common.offline': 'Please check your connection and try again.',
+
+  // home
+  'home.greetingMorning': 'Good morning',
+  'home.greetingAfternoon': 'Good afternoon',
+  'home.greetingEvening': 'Good evening',
+  'home.openProfile': 'Open profile',
+  'home.doctorsFailed': "Couldn't load doctors.",
+  'config.refreshFailed': "Couldn't refresh. Showing the last home we loaded.",
+  'config.usingSaved': "You're offline. Showing your saved home.",
+  'config.usingBundled': "We couldn't reach the clinic. Showing the standard home.",
+
+  // doctors and booking
+  'doctors.title': 'Choose a doctor',
+  'doctors.failedTitle': "Couldn't load doctors",
+  'doctors.emptyTitle': 'No doctors available',
+  'doctors.emptyMessage': 'Please check again later, or call the clinic.',
+  'book.title': 'Book a visit',
+  'book.doctorNotFound': 'Doctor not found',
+  'book.doctorNotFoundMessage': "This doctor isn't available right now.",
+  'book.seeAllDoctors': 'See all doctors',
+  'book.experience': '{years} years experience',
+  'book.chooseDate': 'Choose a date',
+  'book.chooseDateHint': 'Pick a day to see open times.',
+  'book.timesFailed': "Couldn't load times.",
+  'book.noTimes': 'No open times',
+  'book.noTimesMessage': 'The clinic is closed or fully booked on this day.',
+  'book.tryNextDay': 'Try the next day',
+  'book.selectTime': 'Select a time',
+  'book.confirm': 'Confirm {time} · {price}',
+  'slots.morning': 'Morning',
+  'slots.evening': 'Evening',
+  'slots.booked': 'booked',
+
+  // booking status
+  'status.confirmingTitle': 'Confirming your visit…',
+  'status.confirmingMessage': 'This usually takes a second.',
+  'status.confirmedTitle': 'Visit booked',
+  'status.bookingId': 'Booking ID {id}',
+  'status.slotTakenTitle': 'That time was just taken',
+  'status.slotTakenMessage': 'Someone booked it a moment ago. Please pick another time.',
+  'status.failedTitle': "Couldn't book your visit",
+  'status.failedMessage': "The clinic didn't respond, so nothing was booked.",
+  'status.notFoundTitle': 'Booking not found',
+  'status.notFoundMessage': 'It may have been removed.',
+  'status.goHome': 'Go home',
+  'status.pickAnotherTime': 'Pick another time',
+  'status.viewBookings': 'View my bookings',
+  'status.backHome': 'Back to home',
+
+  // bookings tab
+  'bookings.title': 'Bookings',
+  'bookings.subtitle': 'Your upcoming visits',
+  'bookings.emptyTitle': 'No visits booked yet',
+  'bookings.emptyMessage': 'Book a doctor or a lab test and it will show up here.',
+  'bookings.bookVisit': 'Book a visit',
+  'bookings.bookAnother': 'Book another visit',
+  'bookings.confirmed': 'Confirmed',
+  'bookings.confirming': 'Confirming…',
+
+  // medicines
+  'rx.title': 'Medicines',
+  'rx.subtitle': "Your prescriptions and today's doses",
+  'rx.failedTitle': "Couldn't load prescriptions",
+  'rx.emptyTitle': 'No prescriptions yet',
+  'rx.emptyMessage': "After your visit, your doctor's prescription will appear here, as well as on WhatsApp.",
+  'rx.active': 'Active',
+  'rx.past': 'Past',
+  'rx.today': 'Today',
+  'rx.takenCount': '{taken} of {total} taken',
+  'rx.seeSchedule': "See today's schedule",
+  'rx.oneDayLeft': '1 day left',
+  'rx.daysLeft': '{count} days left',
+  'rx.completed': 'Completed',
+  'rx.oneMedicine': '1 medicine',
+  'rx.medicines': '{count} medicines',
+  'rx.forPatient': 'for {name}',
+  'rx.detailTitle': 'Prescription',
+  'rx.notFoundTitle': 'Prescription not found',
+  'rx.notFoundMessage': 'It may have been removed by the clinic.',
+  'rx.backToMedicines': 'Back to medicines',
+  'rx.issued': 'Issued {date}',
+  'rx.courseDay': 'Day {day} of {total} · {left} days left',
+  'rx.courseCompleted': 'Course completed',
+  'rx.noDosesToday': 'No doses today. This course is complete.',
+  'rx.allMedicines': 'All medicines',
+  'rx.days': '{count} days',
+
+  // doses and reminders
+  'dose.morning': 'Morning',
+  'dose.afternoon': 'Afternoon',
+  'dose.night': 'Night',
+  'dose.taken': 'Taken',
+  'dose.markTaken': 'Marks this dose as taken',
+  'dose.markNotTaken': 'Marks this dose as not taken',
+  'reminders.title': "Today's reminders",
+  'reminders.failedTitle': "Couldn't load your medicines",
+  'reminders.emptyTitle': 'No medicines today',
+  'reminders.emptyMessage': 'You have no doses scheduled for today.',
+  'reminders.progress': "{taken} of {total} doses taken today. Tap a medicine when you've taken it.",
+  'reminders.remindMe': 'Remind me',
+  'reminders.remindMeHint': 'A notification at 8 AM, 2 PM and 9 PM on days you have medicines',
+  'reminders.notOnWeb': 'Reminders work in the phone app.',
+  'reminders.permissionDenied': 'Notifications are turned off for Tapza Care. You can allow them in your phone settings.',
+  'reminders.notificationTitle': '{time} medicines',
+  'reminders.notificationBody': 'Time to take your medicines. Tap to see the list.',
+
+  // profile
+  'profile.title': 'Profile',
+  'profile.subtitle': 'Settings and demo controls',
+  'profile.appearance': 'Appearance',
+  'profile.phoneSetting': 'Phone setting',
+  'profile.light': 'Light',
+  'profile.dark': 'Dark',
+  'profile.language': 'Language',
+};
+
+export type TranslationKey = keyof typeof en;

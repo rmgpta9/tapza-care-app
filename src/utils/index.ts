@@ -11,3 +11,4 @@ export {
   todaysDoses,
   type Dose,
 } from './prescriptions';
+export { cancelReminders, openRemindersOnTap, remindersSupported, scheduleReminders, setUpNotifications } from './notifications';

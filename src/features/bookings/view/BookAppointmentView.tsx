@@ -15,6 +15,7 @@ import {
   Skeleton,
   SlotGrid,
 } from '@/components';
+import { useT } from '@/i18n';
 import { newBookingId, useBookings } from '@/store/bookings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { addDays, today } from '@/utils/date';
@@ -26,6 +27,7 @@ const DAYS_AHEAD = 7;
 // Opened from a doctor card, or from a service card (which adds the service name and price).
 export function BookAppointmentView() {
   const { colors, spacing } = useTheme();
+  const t = useT();
   const params = useLocalSearchParams<{ doctorId: string; serviceName?: string; priceInr?: string }>();
   const { data: doctors, isLoading: doctorsLoading } = useDoctors();
   const bookSlot = useBookings((s) => s.bookSlot);
@@ -68,7 +70,7 @@ export function BookAppointmentView() {
   if (doctorsLoading) {
     return (
       <View style={{ padding: spacing.lg, gap: spacing.md }}>
-        <Stack.Screen options={{ headerShown: true, title: 'Book a visit' }} />
+        <Stack.Screen options={{ headerShown: true, title: t('book.title') }} />
         <Skeleton width="100%" height={120} />
         <Skeleton width="40%" height={18} />
         <Skeleton width="100%" height={64} />
@@ -79,12 +81,12 @@ export function BookAppointmentView() {
   if (!doctor) {
     return (
       <View style={{ padding: spacing.lg }}>
-        <Stack.Screen options={{ headerShown: true, title: 'Book a visit' }} />
+        <Stack.Screen options={{ headerShown: true, title: t('book.title') }} />
         <EmptyState
           icon="person-outline"
-          title="Doctor not found"
-          message="This doctor isn't available right now."
-          actionLabel="See all doctors"
+          title={t('book.doctorNotFound')}
+          message={t('book.doctorNotFoundMessage')}
+          actionLabel={t('book.seeAllDoctors')}
           onAction={() => router.replace('/doctors')}
         />
       </View>
@@ -95,7 +97,7 @@ export function BookAppointmentView() {
 
   return (
     <View style={styles.fill}>
-      <Stack.Screen options={{ headerShown: true, title: 'Book a visit' }} />
+      <Stack.Screen options={{ headerShown: true, title: t('book.title') }} />
 
       <ScrollView contentContainerStyle={{ padding: spacing.lg, gap: spacing.lg }}>
         <Card style={{ gap: spacing.md }}>
@@ -112,8 +114,8 @@ export function BookAppointmentView() {
             </AppText>
           )}
           <AppText variant="small" color="textSecondary">
-            Speaks {doctor.languages.join(', ')}
-            {doctor.experienceYears ? ` · ${doctor.experienceYears} years experience` : ''}
+            {t('common.speaks', { languages: doctor.languages.join(', ') })}
+            {doctor.experienceYears ? ` · ${t('book.experience', { years: doctor.experienceYears })}` : ''}
           </AppText>
         </Card>
 
@@ -129,9 +131,9 @@ export function BookAppointmentView() {
         )}
 
         <View style={{ gap: spacing.sm }}>
-          <AppText variant="heading">Choose a date</AppText>
+          <AppText variant="heading">{t('book.chooseDate')}</AppText>
           <AppText variant="small" color="textSecondary">
-            Pick a day to see open times.
+            {t('book.chooseDateHint')}
           </AppText>
         </View>
         <DateStrip dates={dates} selected={date} onSelect={pickDate} />
@@ -152,15 +154,15 @@ export function BookAppointmentView() {
           )}
 
           {slots.error && (
-            <Notice message="Couldn't load times." actionLabel="Retry" onAction={() => slots.refetch()} />
+            <Notice message={t('book.timesFailed')} actionLabel={t('common.retry')} onAction={() => slots.refetch()} />
           )}
 
           {slots.data?.length === 0 && (
             <EmptyState
               icon="calendar-clear-outline"
-              title="No open times"
-              message="The clinic is closed or fully booked on this day."
-              actionLabel={date && date !== lastDate ? 'Try the next day' : undefined}
+              title={t('book.noTimes')}
+              message={t('book.noTimesMessage')}
+              actionLabel={date && date !== lastDate ? t('book.tryNextDay') : undefined}
               onAction={date && date !== lastDate ? () => pickDate(addDays(date, 1)) : undefined}
             />
           )}
@@ -170,7 +172,11 @@ export function BookAppointmentView() {
           )}
 
           <Button
-            label={slot ? `Confirm ${formatTime(slot.startsAt)} · ${formatRupees(price)}` : 'Select a time'}
+            label={
+              slot
+                ? t('book.confirm', { time: formatTime(slot.startsAt), price: formatRupees(price) })
+                : t('book.selectTime')
+            }
             onPress={confirm}
             disabled={!slot}
           />
