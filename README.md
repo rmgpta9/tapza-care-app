@@ -15,7 +15,9 @@ Demo video: [docs/tapza-app.mp4](docs/tapza-app.mp4)
 
 ## Install the app (Android)
 
-1. Open the latest release: **[Releases](../../releases)** and download `tapza-care.apk` on your Android phone.
+**Download:** [Expo build page](https://expo.dev/accounts/dev_raman/projects/tapza-care/builds/9e732b5c-6e05-4f4a-b6e5-f1482862f632) (tap **Install** on an Android phone) · or the APK on **[GitHub Releases](../../releases)**
+
+1. Open one of the links above on your Android phone and download the APK (on Releases it's `tapza-care.apk`).
 2. Open the file. If Android asks, allow installing apps from this source (Chrome or Files).
 3. Open **Tapza Care**. No account or server is needed; the backend is built in.
 

@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.tapza.care"
+      "bundleIdentifier": "com.tapza.care",
+      "infoPlist": {}
     },
     "android": {
       "package": "com.tapza.care",
@@ -40,6 +41,16 @@
     ],
     "experiments": {
       "typedRoutes": false
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "3afd667c-8444-4686-b3b6-9661889d33a1"
+      }
     }
   }
 }
