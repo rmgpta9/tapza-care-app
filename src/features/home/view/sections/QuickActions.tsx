@@ -58,7 +58,7 @@ export function QuickActions({ section }: SectionProps) {
             >
               <Icon name={item.icon} size={28} color="primary" />
             </View>
-            <AppText variant="label" numberOfLines={2} style={styles.label}>
+            <AppText variant="label" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={styles.label}>
               {item.label}
             </AppText>
           </Pressable>
