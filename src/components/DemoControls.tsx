@@ -7,7 +7,11 @@ import {
   type MockControls,
   type NetworkSpeed,
 } from '@/api/mock/controls';
-import { AppText, Button, Card, SegmentedControl, ToggleRow, type SegmentOption } from '@/components';
+import { AppText } from './AppText';
+import { Button } from './Button';
+import { Card } from './Card';
+import { SegmentedControl, type SegmentOption } from './SegmentedControl';
+import { ToggleRow } from './ToggleRow';
 import { useLayoutConfig } from '@/config/ConfigProvider';
 import { useConfigCache } from '@/config/configCache';
 import { useTheme } from '@/theme/ThemeProvider';

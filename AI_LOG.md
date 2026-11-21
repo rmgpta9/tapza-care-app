@@ -20,6 +20,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 3 | "Don't build the whole thing in one go. First split the woke into parts and suggest me the plan, then we will move step by step." | Work split into small, reviewable steps, each committed separately. |
 | 4 | "Create an index file in the components folder and export all components from there." | `src/components/index.ts`; screens import from `@/components`. |
 | 5 | "The code is over-complicated, even the theme has lots of calculations." | Simplification pass, listed in the next table. |
+| 6 | "In features, put components in a components folder and utils in a utils folder. Add a view folder for the screens and an index.ts in every folder. Code should not be over-complicated." | Each feature has a `view/` folder for its screen and an `index.ts` in every folder; route files are one line. |
+| 7 | "Don't add components and utils under home; add them to the common components and utils folders." | Shared UI in `src/components`, helpers in `src/utils`. |
 
 ---
 
@@ -39,6 +41,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Spring animation on every button press | Animation where the brief doesn't ask for it | `Pressable` with a pressed opacity |
 | Validation with warning lists, contrast checks and a custom error class | More than the app uses | Validation returns `{ ok, config }` or `{ ok, error }` |
 | A `lib/` folder for small helpers | Unclear name | `utils/` |
+| `components/` and `utils/` folders inside each feature | I wanted one shared place for them | Common `src/components` and `src/utils` |
 
 ---
 
@@ -54,6 +57,7 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | Hard-coded colours only in `src/theme/colors.ts` | Everything else comes from the config, as the brief requires |
 | In dark mode, section bands use the theme background | Config band colours are light, so text on them would be unreadable in dark mode |
 | Header and reveal animations run on the UI thread (Reanimated) and only change opacity and position | Smooth on mid-range Android; reveal is skipped when the phone's "reduce motion" setting is on |
+| Screens live in `features/<name>/view`; route files only re-export them | One place per screen; `src/app` stays a plain list of routes |
 
 ---
 

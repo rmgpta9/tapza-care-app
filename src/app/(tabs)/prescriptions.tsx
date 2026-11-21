@@ -1,10 +1,3 @@
-import { AppText, Screen } from '@/components';
+import { PrescriptionsView } from '@/features/prescriptions';
 
-// TODO: prescriptions list + reminders
-export default function PrescriptionsScreen() {
-  return (
-    <Screen title="Medicines" subtitle="Prescriptions and reminders">
-      <AppText color="textSecondary">Coming in step 5.</AppText>
-    </Screen>
-  );
-}
+export default PrescriptionsView;
