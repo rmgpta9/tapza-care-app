@@ -91,6 +91,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | The bottom sheet's gesture code broke the test setup | Added Gesture Handler's own Jest setup file and a 3-line Worklets mock |
 | In dark mode the home banner faded into a light colour, so its white text was hard to read | Darker dark-mode `secondary` colour in both configs |
 | ESLint couldn't find `AndroidImportance` through `import * as Notifications` | Imported it by name instead |
+| The "Prescriptions" quick-action label split mid-word ("Prescription / s") on narrow tiles | Label limited to one line; on phones it shrinks slightly to fit |
+| `expo-doctor` found `expo-font` missing; the icons need it and the APK could crash without it (Expo Go hid the problem) | Installed with `npx expo install expo-font`; all 20 checks pass |
 
 ---
 
@@ -104,3 +106,4 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | 4 | Booking flow: doctor list, date strip, slot bottom sheet, optimistic confirm, confirmation screen, Bookings tab | Committed |
 | 5 | Prescriptions: list, detail, morning / afternoon / night schedule, mark dose taken, today's reminders | Committed |
 | 6 | Hindi and Telugu, reminder notifications, dark-mode banner fix | Committed |
+| 7 | README, EAS build settings, pre-build checks, submission | In progress |
