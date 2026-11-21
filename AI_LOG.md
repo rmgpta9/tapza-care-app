@@ -73,6 +73,8 @@ Prompts are lightly edited for spelling and grammar; the meaning is unchanged.
 | React Native's `URL` doesn't fully support `searchParams` | Query string parsed with a small helper in the mock server |
 | The icon font loader needs `expo-asset`, which was only installed inside Expo's own folder | Installed it with `npx expo install expo-asset` |
 | After switching config, some sections stayed invisible (same section ids, stale position) | Section keys include the config version, so sections remount and animate in again |
+| Reanimated 4.7's official Jest mock starts its native engine and fails | Small hand-written mock of the Reanimated functions the app uses, in `jest.setup.ts` |
+| `render` in Testing Library v14 is asynchronous | Tests `await render(...)` |
 
 ---
 

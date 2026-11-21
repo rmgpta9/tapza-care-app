@@ -4,7 +4,8 @@ import { useLayoutConfig } from '@/config/ConfigProvider';
 import { useSettings } from '@/store/settings';
 import { buildTheme, type Theme } from './buildTheme';
 
-const ThemeContext = createContext<Theme | null>(null);
+// Exported so tests can give components a theme without loading a config.
+export const ThemeContext = createContext<Theme | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const { config } = useLayoutConfig();
